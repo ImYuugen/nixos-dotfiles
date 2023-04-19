@@ -1,9 +1,7 @@
 { pkgs, ... }:
 
 {
-  home-manager.enable = true;
-  command-not-found.enable = true;
-  
+  home-manager.enable = true;  
   fish.enable = true;
 
   neovim = import ./neovim { inherit pkgs; } ;

@@ -23,6 +23,12 @@
       repo = "flake-utils";
       ref = "main";
     };
+
+    hyprland = {
+      type = "github";
+      owner = "hyprwm";
+      repo = "Hyprland";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, flake-utils, ... } @inputs:
@@ -61,6 +67,9 @@
 
           modules = [
             ./omen.nix
+
+	    inputs.hyprland.nixosModules.default
+	    {programs.hyprland.enable = true;} # There is probably a better way to do this
           ] ++ sharedModules;
         };
 

@@ -6,7 +6,7 @@
   ];
 
   networking = {
-    hostName = "Omen";
+    hostName = "omen";
     useDHCP = false;
     networkmanager.enable = true;
     firewall = {
