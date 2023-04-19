@@ -16,13 +16,20 @@
         firefox
 
         #Dev
-        #neovim
+	
 
         #Desktop/Wayland
+	cliphist
+	eww-wayland
         grim
+	hyprpicker
+	hyprpaper
         libnotify
+	polkit
+	waybar
         wayland
         wdisplays
+	wireplumber
         wofi
         xdg-desktop-portal
         xdg-desktop-portal-wlr
@@ -36,20 +43,26 @@
         rustup  #Rust
 
         #Media
+	ani-cli
         krita
         obs-studio
+	spotify
         vlc
 
         #Network
         wireguard-tools
 
         #Utils
+	betterdiscordctl
         flameshot
         gnupg
         gtop
         neofetch
+	playerctl
         ripgrep
+	udiskie
         qpwgraph
+	wev
 
         #Custom defined programs
         discord

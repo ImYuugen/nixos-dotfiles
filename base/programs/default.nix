@@ -7,17 +7,18 @@
   # Global Packages
   environment.systemPackages = builtins.attrValues {
     inherit (pkgs)
-      file
-      git
-      git-lfs
-      gnumake
-      htop
-      most
-      neofetch
-      pciutils
-      python3
-      tree
-      wget
-      ;
+    brightnessctl
+    file
+    git
+    git-lfs
+    gnumake
+    htop
+    most
+    neofetch
+    pciutils
+    python3
+    tree
+    wget
+    ;
   };
 }

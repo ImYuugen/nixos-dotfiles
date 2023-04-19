@@ -74,6 +74,8 @@
       jack.enable = true;
     };
 
+    blueman.enable = true;
+
     printing.enable = true;
 
     openssh = {
@@ -86,12 +88,24 @@
 
     xserver = {
       videoDrivers = [ "amdgpu" "nvidia" ];
+
+      # Login Manager
+      displayManager = {
+        gdm = {
+      	  enable = true;
+	  wayland = true;
+	  autoSuspend = true;
+        };
+        defaultSession = "none+hyprland";
+      };
     };
   };
 
   hardware = {
     nvidia.modesetting.enable = true;
     opengl.enable = true;
+
+    bluetooth.enable = true;
   };
 
   environment.variables = {
@@ -132,7 +146,6 @@
       ttf_bitstream_vera
     ];
 
-    #TODO: Font config
     fontconfig = {
       defaultFonts = {
         monospace = [
