@@ -93,17 +93,24 @@
       displayManager = {
         gdm = {
       	  enable = true;
-	  wayland = true;
-	  autoSuspend = true;
+	      wayland = false;
         };
-        defaultSession = "none+hyprland";
       };
     };
   };
 
+  qt = {
+    enable = true;
+    platformTheme = "kde";
+    style = "adwaita-dark";
+  };
+
   hardware = {
     nvidia.modesetting.enable = true;
-    opengl.enable = true;
+    opengl = {
+      enable = true;
+      driSupport32Bit = true;
+    };
 
     bluetooth.enable = true;
   };
@@ -122,7 +129,7 @@
     libvirtd = {
       enable = true;
       onBoot = "ignore";
-      qemu.package = pkgs.qemu_kvm;
+      onShutdown = "shutdown";
     };
   };
 
@@ -135,6 +142,7 @@
       fira-code-symbols
       iosevka
       ipafont                           #JP
+      jetbrains-mono
       kochi-substitute                  #JP
       liberation_ttf
       nerdfonts

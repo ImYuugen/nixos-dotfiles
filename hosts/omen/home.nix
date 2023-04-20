@@ -16,20 +16,20 @@
         firefox
 
         #Dev
-	
+        nodejs
 
         #Desktop/Wayland
-	cliphist
-	eww-wayland
+	    cliphist
+	    eww-wayland
         grim
-	hyprpicker
-	hyprpaper
+	    hyprpicker
+	    hyprpaper
         libnotify
-	polkit
-	waybar
+	    polkit
+	    waybar
         wayland
         wdisplays
-	wireplumber
+	    wireplumber
         wofi
         xdg-desktop-portal
         xdg-desktop-portal-wlr
@@ -38,31 +38,37 @@
         lz4 unrar unzip zip
 
         #Langs
-        gcc     #C/CPP
+        gcc gdb #C/C++
+        luajit #Lua
         nil     #Nix
-        rustup  #Rust
+        rustup rust-analyzer  #Rust
+        wasmer wasmtime  #WebAssembly
 
         #Media
-	ani-cli
+	    ani-cli
         krita
+        mpv
         obs-studio
-	spotify
+	    spotify
         vlc
+        yt-dlp
 
         #Network
         wireguard-tools
 
         #Utils
-	betterdiscordctl
+        alsa-utils
+	    betterdiscordctl
         flameshot
         gnupg
         gtop
+        jellyfin-ffmpeg
         neofetch
-	playerctl
+	    playerctl
         ripgrep
-	udiskie
+	    udiskie
         qpwgraph
-	wev
+	    wev
 
         #Custom defined programs
         discord
