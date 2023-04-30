@@ -1,5 +1,0 @@
-{ pkgs, ... }:
-
-{
-  mako.enable = true;
-}

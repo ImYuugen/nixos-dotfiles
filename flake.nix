@@ -1,87 +1,54 @@
 {
-  description = "Yuugen's NixOS Configuration";
+  description = "gnnnfggnfgngn..,,,...,";
 
-  inputs = {
-    nixpkgs = {
-      type = "github";
-      owner = "NixOs";
-      repo = "nixpkgs";
-      ref = "nixos-unstable";
-    };
+  outputs = { home-manager, nixpkgs, nur, ... } @inputs:
+  let
+    system = "x86_64-linux";
+    pkgs = nixpkgs.legacyPackages.${system};
+    lib = nixpkgs.lib;
+    user = "yuugen";
 
-    home-manager = {
-      type = "github";
-      owner = "nix-community";
-      repo = "home-manager";
-      ref = "master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    mkSystem = pkgs: system: hostname:
+      pkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          { networking.hostName = hostname; }
+          # General configuration
+          ./modules/system/configuration.nix
 
-    flake-utils = {
-      type = "github";
-      owner = "numtide";
-      repo = "flake-utils";
-      ref = "main";
-    };
+          # Hardware related configuration
+          ./hosts/${hostname}/hardware-configuration.nix
 
-    hyprland = {
-      type = "github";
-      owner = "hyprwm";
-      repo = "Hyprland";
+          home-manager.nixosModules.home-manager {
+            home-manager = {
+              useUserPackages = true;
+              #useGlobalPackages = true;
+              extraSpecialArgs = { inherit inputs; };
+              users.${user} = ./hosts/${hostname}/user.nix;
+            };
+            nixpkgs.overlays = [
+              nur.overlay
+              (import ./overlays)
+            ];
+          }
+        ];
+        specialArgs = { inherit inputs; };
+      };
+  in {
+    nixosConfigurations = {
+      # Da Laptop
+      #                 Pkgs    Arch      Hostname
+      omen15 = mkSystem nixpkgs "${system}" "omen15";
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, flake-utils, ... } @inputs:
-  {
-    nixosModules = {
-      home = {
-        home-manager = {
-          useGlobalPkgs = true;
-          useUserPackages = true;
-          users.yuugen = import ./home;
-          verbose = true;
-        };
-        #nix-path.nix.nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
-      };
-    };
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    overlays = import ./overlays;
+    home-manager.url = "github:nix-community/home-manager/master";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixosConfigurations =
-      let
-        system = "x86_64-linux";
-        shared-overlays = [
-          (self: super: {
-            packages = import ./pkgs { pkgs = super; };
-          })
-        ] ++ builtins.attrValues self.overlays;
-
-        sharedModules = [
-          home-manager.nixosModule { nixpkgs.overlays = shared-overlays; }
-        ] ++ (nixpkgs.lib.attrValues self.nixosModules);
-      in
-      {
-        omen = nixpkgs.lib.nixosSystem
-        {
-          inherit system;
-
-          modules = [
-            ./omen.nix
-
-	    inputs.hyprland.nixosModules.default
-	    {programs.hyprland.enable = true;} # There is probably a better way to do this
-          ] ++ sharedModules;
-        };
-
-        # Template:
-        # machine = nixpkgs.lib.nixosSystem
-        # {
-        #   inherit system;
-        #   
-        #   modules = [
-        #     ./machine.nix
-        #   ] ++ sharedModules;
-        # };
-      };
+    nur.url = "github:nix-community/NUR";
+    nur.inputs.nixpkgs.follows = "nixpkgs";
   };
 }
