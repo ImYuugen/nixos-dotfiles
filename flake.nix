@@ -22,7 +22,7 @@
           home-manager.nixosModules.home-manager {
             home-manager = {
               useUserPackages = true;
-              #useGlobalPackages = true;
+              useGlobalPkgs = true;
               extraSpecialArgs = { inherit inputs; };
               users.${user} = ./hosts/${hostname}/user.nix;
             };
@@ -30,6 +30,7 @@
               nur.overlay
               (import ./overlays)
             ];
+            nixpkgs.config.allowUnfree = true;
           }
         ];
         specialArgs = { inherit inputs; };
@@ -45,9 +46,13 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    home-manager.url = "github:nix-community/home-manager/master";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager = {
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    nur.url = "github:nix-community/NUR";
+    nur = {
+      url = "github:nix-community/NUR";
+    };
   };
 }

@@ -32,10 +32,9 @@
         xdg-desktop-portal-wlr
         xdg-desktop-portal-gtk
       ];
-      gtkUsePortal = true;
+      #gtkUsePortal = true; # DEPRECATED
     };
   };
-
   nix = {
     settings = {
       auto-optimise-store = true;
@@ -54,7 +53,7 @@
   };
 
   boot = {
-    cleanTmpDir = true;
+    tmp.cleanOnBoot = true;
     loader = {
       systemd-boot.enable = true;
       systemd-boot.editor = false;

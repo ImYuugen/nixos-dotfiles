@@ -10,7 +10,6 @@ in
       rnix-lsp nixfmt # Nix
       sumneko-lua-language-server stylua # Lua
       rust-analyzer # Rust
-      bash-language-server # Bash
     ];
 
     programs.neovim.enable = true;

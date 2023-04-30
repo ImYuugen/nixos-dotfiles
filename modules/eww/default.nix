@@ -10,7 +10,7 @@ in
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       eww-wayland
-      amixer
+      alsa-utils
       brightnessctl
       # Fonts used by eww
       (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
