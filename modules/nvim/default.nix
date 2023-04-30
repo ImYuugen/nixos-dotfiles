@@ -13,15 +13,9 @@ in
       bash-language-server # Bash
     ];
 
-    programs.fish = {
-      initExtra = ''
-        export EDITOR="nvim"
-      '';
-    };
-
     programs.neovim.enable = true;
 
     # I prefer to use lua files for my neovim config
-    home.file.".config/nvim/".source = ./config/;
+    home.file.".config/nvim/".source = ./config;
   };
 }

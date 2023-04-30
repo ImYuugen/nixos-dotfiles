@@ -8,11 +8,13 @@ in
   config = mkIf cfg.enable {
     home.packages = [ pkgs.dunst ];
 
-    services.dunst.enable = true;
-    settings = {
-      global = {
-# TODO: Add config
-        timeout = 3;
+    services.dunst = {
+      enable = true;
+      settings = {
+        global = {
+        # TODO: Add config
+          timeout = 3;
+        };
       };
     };
   };

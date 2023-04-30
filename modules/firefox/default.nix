@@ -8,20 +8,25 @@ in
   config = mkIf cfg.enable {
     programs.firefox = {
       enable = true;
-      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-        clearurls
-        darkreader
-        decentraleyes
-        df-youtube
-        enhancer-for-youtube
-        firefox-translations
-        image-search-options
-        sponsorblock
-        ublock-origin
-        rust-search-extension
-      ];
 
-      profiles.yuugen = {
+      profiles.default = {
+        id = 0;
+        name = "Default";
+        isDefault = true;
+
+        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+          clearurls
+          darkreader
+          decentraleyes
+          df-youtube
+          enhancer-for-youtube
+          firefox-translations
+          image-search-options
+          sponsorblock
+          ublock-origin
+          rust-search-extension
+        ];
+
         settings = {
           # Telemetry
           "toolkit.telemetry.enabled" = false;
