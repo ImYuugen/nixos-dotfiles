@@ -6,7 +6,7 @@
   programs.fish.enable = true;
 
   environment.systemPackages = with pkgs; [
-    acpi tlp git
+    acpi tlp git nvim
   ];
 
   fonts = {
@@ -32,7 +32,6 @@
         xdg-desktop-portal-wlr
         xdg-desktop-portal-gtk
       ];
-      #gtkUsePortal = true; # DEPRECATED
     };
   };
   nix = {
@@ -53,15 +52,30 @@
   };
 
   boot = {
+    initrd.kernelModules = [ "amdgpu" ];
+
     tmp.cleanOnBoot = true;
     loader = {
-      systemd-boot.enable = true;
-      systemd-boot.editor = false;
-      efi.canTouchEfiVariables = true;
-      efi.efiSysMountPoint = "/boot/efi";
-      timeout = 0;
+      grub = {
+        enable = true;
+        version = 2;
+        device = "nodev";
+        efiSupport = true;
+        useOSProber = true;
+
+        theme = pkgs.nixos-grub2-theme;
+      };
+
+      systemd-boot.enable = false;
+      efi = {
+        canTouchEfiVariables = true;
+        efiSysMountPoint = "/boot/efi";
+      };
+      timeout = 10;
     };
   };
+
+  services.xserver.videoDrivers = [ "amdgpu" "nvidia" ];
 
   time.timeZone = "Europe/Paris";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -72,7 +86,7 @@
 
   users.users.yuugen = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "input" ];
+    extraGroups = [ "wheel" "input" "audio" "video" "networkmanager" ];
     shell = pkgs.fish;
   };
 
@@ -88,7 +102,6 @@
 
   environment.variables = {
     EDITOR = "nvim";
-
     XDG_DATA_HOME = "$HOME/.local/share";
     PASSWORD_STORE_DIR = "$HOME/.local/share/password-store";
     GTK_RC_FILES = "$HOME/.config/gtk-1.0/gtk.css";
@@ -128,6 +141,11 @@
     opengl = {
       enable = true;
       driSupport = true;
+      driSupport32Bit = true;
+      extraPackages = [ pkgs.amdvlk ];
+    };
+    nvidia = {
+      modesetting.enable = true;
     };
   };
 
