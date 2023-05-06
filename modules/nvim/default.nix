@@ -22,8 +22,8 @@ in
     home.file.".config/nvim/lua/yuugen/packer.lua".source = ./config/lua/yuugen/packer.lua;
     home.file.".config/nvim/lua/yuugen/set.lua".source = ./config/lua/yuugen/set.lua;
 
-    home.file.".config/nvim/after/plugins/colors.lua".source = ./config/after/plugins/colors.lua;
-    home.file.".config/nvim/after/plugins/lsp.lua".source = ./config/after/plugins/lsp.lua;
-    home.file.".config/nvim/after/plugins/treesitter.lua".source = ./config/after/plugins/treesitter.lua;
+    home.file.".config/nvim/after/plugin/colors.lua".source = ./config/after/plugin/colors.lua;
+    home.file.".config/nvim/after/plugin/lsp.lua".source = ./config/after/plugin/lsp.lua;
+    home.file.".config/nvim/after/plugin/treesitter.lua".source = ./config/after/plugin/treesitter.lua;
   };
 }

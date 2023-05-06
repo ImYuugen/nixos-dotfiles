@@ -1,4 +1,4 @@
-
-_final: prev: {
-
+self: super:
+{
+  discord = ./discord.nix;
 }

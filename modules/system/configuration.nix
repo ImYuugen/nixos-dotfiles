@@ -6,7 +6,7 @@
   programs.fish.enable = true;
 
   environment.systemPackages = with pkgs; [
-    acpi tlp git nvim
+    acpi tlp git neovim
   ];
 
   fonts = {
