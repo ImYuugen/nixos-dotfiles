@@ -11,15 +11,33 @@
 
   fonts = {
     fonts = with pkgs; [
+      carlito
+      dejavu_fonts
+      ipafont
       jetbrains-mono
+      kochi-substitute
       roboto
       openmoji-color
+      source-code-pro
       (nerdfonts.override { fonts = [ "JetBrainsMono" "FiraCode" "Iosevka" ]; })
+      ttf_bitstream_vera
     ];
 
     fontconfig = {
       hinting.autohint = true;
       defaultFonts = {
+        monospace = [
+          "DejaVu Sans Mono"
+          "IPAGothic"
+        ];
+        sansSerif = [
+          "DejaVu Sans"
+          "IPAPGothic"
+        ];
+        serif = [
+          "DejaVu Serif"
+          "IPAPMincho"
+        ];
         emoji = [ "OpenMoji Color" ];
       };
     };
@@ -58,11 +76,13 @@
     loader = {
       grub = {
         enable = true;
+        default = "2"; # Windows
         version = 2;
         device = "nodev";
         efiSupport = true;
         useOSProber = true;
 
+        backgroundColor = "#000000";
         theme = pkgs.nixos-grub2-theme;
       };
 
@@ -92,6 +112,8 @@
 
   networking = {
     wireless.iwd.enable = true;
+    networkmanager.enable = true;
+    networkmanager.wifi.backend = "iwd";
     firewall = {
       enable = true;
       allowedTCPPorts = [ 443 80 ];

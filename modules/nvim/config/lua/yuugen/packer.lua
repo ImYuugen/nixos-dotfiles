@@ -21,9 +21,15 @@ return require('packer').startup(function(use)
         requires = { { 'nvim-lua/plenary.nvim' } }
     }
 
+    --use {
+    --    'haishanh/night-owl.vim',
+    --    config = function() vim.cmd('colorscheme night-owl') end
+    --}
+
     use {
-        'rose-pine/neovim',
-        config = function() vim.cmd('colorscheme rose-pine') end
+        'catppuccin/nvim',
+        as = 'catppuccin',
+        config = function() vim.cmd('colorscheme catppuccin') end,
     }
 
     use {
@@ -52,6 +58,7 @@ return require('packer').startup(function(use)
 		    {'neovim/nvim-lspconfig'},
 		    {'williamboman/mason.nvim'},
 		    {'williamboman/mason-lspconfig.nvim'},
+            {'jose-elias-alvarez/null-ls.nvim'},
 
 		    -- Autocompletion
 		    {'hrsh7th/nvim-cmp'},
@@ -66,6 +73,41 @@ return require('packer').startup(function(use)
         }
     }
 
+    use 'simrat39/symbols-outline.nvim'
+
     use 'folke/zen-mode.nvim'
-    use 'github/copilot.vim'
+    --use 'github/copilot.vim'
+
+    -- QOL
+    use 'RRethy/vim-illuminate'
+    use 'j-hui/fidget.nvim'
+    use 'lvimuser/lsp-inlayhints.nvim'
+
+    -- Utils
+    --use 'rcarriga/vim-notify'
+
+    use 'kyazdani42/nvim-tree.lua'
+
+    use 'folke/todo-comments.nvim'
+
+    use 'ahmedkhalf/project.nvim'
+
+    use 'kyazdani42/nvim-web-devicons'
+
+    use 'lewis6991/gitsigns.nvim'
+    use 'pwntester/octo.nvim'
+
+    use 'folke/which-key.nvim'
+
+    use {
+        'christianchiarulli/rust-tools.nvim',
+        branch = 'modularize_and_inlay_rewrite',
+    }
+    use 'Saecki/crates.nvim'
+
+    use {
+        'iamcco/markdown-preview.nvim',
+        run = 'cd app && npm install',
+        ft = 'mardown',
+    }
 end)

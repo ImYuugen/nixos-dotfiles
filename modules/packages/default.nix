@@ -21,6 +21,7 @@ in {
             mpv firefox pqiv
             screen bandw maintenance nvidia-offload
             wf-recorder anki-bin
+            discord spotify
         ];
     };
 }

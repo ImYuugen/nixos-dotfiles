@@ -35,3 +35,18 @@ vim.g.netrw_winsize = 25
 
 -- Load lazy plugins
 require('mason').setup()
+
+-- Catpuccin Config
+require('catppuccin').setup({
+    flavour = 'mocha',
+    background = {
+        light = 'latte',
+        dark = 'mocha',
+    },
+    integrations = {
+        mason = true,
+        native_lsp = true,
+        treesitter = true,
+        cmp = true,
+    },
+})
