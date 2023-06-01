@@ -1,47 +1,42 @@
+#
+# IT'S THE FIFTH FUCKING TIME I REWRITE
+# THIS FILE, I SURE DO HOPE IT WORKS
+#
+
 {
-  description = "gnnnfggnfgngn..,,,...,";
+  description = "gnnnfggnfgngn..,,,..,.";
 
-  outputs = { home-manager, nixpkgs, nur, ... } @inputs:
-  let
-    system = "x86_64-linux";
-    pkgs = nixpkgs.legacyPackages.${system};
-    lib = nixpkgs.lib;
-    user = "yuugen";
+  outputs = { self, nixpkgs, ... } @inputs:
+    let
+      system = "x86_64-linux";
 
-    mkSystem = pkgs: system: hostname:
-      pkgs.lib.nixosSystem {
+      lib = import ./lib { inherit pkgs inputs; lib = nixpkgs.lib; };
+
+      mkPkgs = pkgs: overlays: import pkgs {
         inherit system;
-        modules = [
-          { networking.hostName = hostname; }
-          # General configuration
-          ./modules/system/configuration.nix
-
-          # Hardware related configuration
-          ./hosts/${hostname}/hardware-configuration.nix
-
-          home-manager.nixosModules.home-manager {
-            home-manager = {
-              useUserPackages = true;
-              useGlobalPkgs = true;
-              extraSpecialArgs = { inherit inputs; };
-              users.${user} = ./hosts/${hostname}/user.nix;
-            };
-            nixpkgs.overlays = [
-              nur.overlay
-              (import ./overlays)
-            ];
-            nixpkgs.config.allowUnfree = true;
-          }
-        ];
-        specialArgs = { inherit inputs; };
+        config.allowUnfree = true;
+        overlays = overlays ++ (lib.attrValues self.overlays);
       };
-  in {
-    nixosConfigurations = {
-      # Da Laptop
-      #                 Pkgs    Arch      Hostname
-      omen15 = mkSystem nixpkgs "${system}" "omen15";
+
+      pkgs = mkPkgs nixpkgs [ self.overlay ];
+
+      inherit (lib._) mapModules mapModulesRec mkHost;
+    in {
+      packages."${system}" = mapModules ./packages (p: pkgs.callPackage p {});
+
+      overlay = final: prev: {
+        _ = self.packages."${system}";
+      };
+
+      overlays = mapModules ./overlays import;
+
+      nixosModules = mapModulesRec ./modules import;
+
+      nixosConfigurations = mapModules ./hosts (mkHost system);
+
+      devShell."${system}" =
+        import ./shell.nix { inherit pkgs; };
     };
-  };
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -54,5 +49,16 @@
     nur = {
       url = "github:nix-community/NUR";
     };
+
+    nixos-hardware = {
+      url = "github:nixos/nixos-hardware";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
+
+    #hyprland = {
+    #  url = "github:hyprwm/Hyprland";
+    #};
   };
 }
